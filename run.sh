@@ -9,4 +9,11 @@ else
 BROKER_ID_OVERRIDE=''
 fi
 
-./bin/kafka-server-start.sh config/server.properties $BROKER_ID_OVERRIDE
+if [ "x$ZOOKEEPER_URL" != "x" ]
+then
+ZOOKEEPER_CONNECT_OVERRIDE="--override zookeeper.connect=$ZOOKEEPER_URL"
+else
+ZOOKEEPER_CONNECT_OVERRIDE=""
+fi
+
+./bin/kafka-server-start.sh config/server.properties $BROKER_ID_OVERRIDE $ZOOKEEPER_CONNECT_OVERRIDE
